@@ -15,13 +15,12 @@
  */
 package com.wade.broker.strategy;
 
-import com.newlandframework.avatarmq.broker.ConsumerMessageListener;
-import com.newlandframework.avatarmq.broker.ProducerMessageListener;
-import com.newlandframework.avatarmq.broker.SendMessageLauncher;
-import com.newlandframework.avatarmq.core.CallBackInvoker;
-import com.newlandframework.avatarmq.model.RequestMessage;
-import com.newlandframework.avatarmq.model.ResponseMessage;
-import io.netty.channel.ChannelHandlerContext;
+
+import com.wade.broker.ConsumerMessageListener;
+import com.wade.broker.ProducerMessageListener;
+import com.wade.core.CallBackInvoker;
+import com.wade.model.RequestMessage;
+import com.wade.model.ResponseMessage;
 
 /**
  * @filename:BrokerConsumerMessageStrategy.java
