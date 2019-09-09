@@ -15,17 +15,30 @@
  */
 package com.wade.netty;
 
-import io.netty.channel.ChannelHandlerContext;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 
 /**
- * @filename:MessageEventHandler.java
- * @description:MessageEventHandler功能模块
+ * @filename:MessageEventAdvisor.java
+ * @description:MessageEventAdvisor功能模块
  * @author tangjie<https://github.com/tang-jie>
  * @blog http://www.cnblogs.com/jietang/
  * @since 2016-8-11
- * 消息处理接口
  */
-public interface MessageEventHandler {
+public class MessageEventAdvisor implements MethodInterceptor {
 
-    void handleMessage(ChannelHandlerContext ctx, Object msg);
+    private MessageEventProxy proxy;
+    private Object msg;
+
+    public MessageEventAdvisor(MessageEventProxy proxy, Object msg) {
+        this.proxy = proxy;
+        this.msg = msg;
+    }
+
+    public Object invoke(MethodInvocation invocation) throws Throwable {
+        proxy.beforeMessage(msg);
+        Object obj = invocation.proceed();
+        proxy.afterMessage(msg);
+        return obj;
+    }
 }

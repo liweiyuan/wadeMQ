@@ -3,6 +3,9 @@ package com.wade.netty;
 import com.wade.core.HookMessageEvent;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.springframework.aop.PointcutAdvisor;
+import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 
 /**
  * @Author :lwy
@@ -47,5 +50,49 @@ public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter impleme
     @Override
     public void afterMessage(Object msg) {
 
+    }
+
+    public MessageEventWrapper<T> getWrapper() {
+        return wrapper;
+    }
+
+    public void setWrapper(MessageEventWrapper<T> wrapper) {
+        this.wrapper = wrapper;
+    }
+
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        super.channelRead(ctx, msg);
+        //消息处理
+        ProxyFactory weaver=new ProxyFactory(wrapper);
+        PointcutAdvisor advisor=new NameMatchMethodPointcutAdvisor();
+        ((NameMatchMethodPointcutAdvisor) advisor).setMappedName(proxyMappedName);
+        ((NameMatchMethodPointcutAdvisor) advisor).setAdvice(new MessageEventAdvisor(wrapper,msg));
+        weaver.addAdvisor(advisor);
+
+        MessageEventHandler proxyHandler= (MessageEventHandler) weaver.getProxy();
+        proxyHandler.handleMessage(ctx, msg);
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        super.channelReadComplete(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        this.cause = cause;
+        cause.printStackTrace();
     }
 }

@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wade.netty;
+package com.wade.broker;
 
-import io.netty.channel.ChannelHandlerContext;
+import com.wade.msg.Message;
+import io.netty.channel.Channel;
 
 /**
- * @filename:MessageEventHandler.java
- * @description:MessageEventHandler功能模块
+ * @filename:ProducerMessageListener.java
+ * @description:ProducerMessageListener功能模块
  * @author tangjie<https://github.com/tang-jie>
  * @blog http://www.cnblogs.com/jietang/
  * @since 2016-8-11
- * 消息处理接口
  */
-public interface MessageEventHandler {
+public interface ProducerMessageListener {
 
-    void handleMessage(ChannelHandlerContext ctx, Object msg);
+    void hookProducerMessage(Message msg, String requestId, Channel channel);
 }

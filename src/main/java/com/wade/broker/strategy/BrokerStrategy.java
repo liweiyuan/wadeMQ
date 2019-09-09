@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wade.netty;
+package com.wade.broker.strategy;
 
+
+import com.wade.broker.ConsumerMessageListener;
+import com.wade.broker.ProducerMessageListener;
+import com.wade.model.RequestMessage;
+import com.wade.model.ResponseMessage;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
- * @filename:MessageEventHandler.java
- * @description:MessageEventHandler功能模块
+ * @filename:BrokerStrategy.java
+ * @description:BrokerStrategy功能模块
  * @author tangjie<https://github.com/tang-jie>
  * @blog http://www.cnblogs.com/jietang/
  * @since 2016-8-11
- * 消息处理接口
  */
-public interface MessageEventHandler {
+public interface BrokerStrategy {
 
-    void handleMessage(ChannelHandlerContext ctx, Object msg);
+    void messageDispatch(RequestMessage request, ResponseMessage response);
+
+    void setHookProducer(ProducerMessageListener hookProducer);
+
+    void setHookConsumer(ConsumerMessageListener hookConsumer);
+
+    void setChannelHandler(ChannelHandlerContext channelHandler);
 }
