@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
  */
 public class BrokerParallelServer implements RemoteServer {
 
-    protected int parallel = NettyClustersConfig.getWorkThreads();
+    int parallel = NettyClustersConfig.getWorkThreads();
 
     private ListeningExecutorService executor = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(parallel));
     private ExecutorCompletionService<Void> executorService;

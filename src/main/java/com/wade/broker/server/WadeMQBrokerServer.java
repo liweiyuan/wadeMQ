@@ -1,6 +1,7 @@
 package com.wade.broker.server;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.wade.broker.MessageBrokerHandler;
 import com.wade.netty.*;
 import com.wade.serialize.KryoCodecUtil;
 import com.wade.serialize.KryoPoolFactory;
@@ -48,7 +49,7 @@ public class WadeMQBrokerServer extends BrokerParallelServer {
     private ServerBootstrap bootstrap;
     private NettyClustersConfig nettyClustersConfig = new NettyClustersConfig();
     private DefaultEventExecutorGroup defaultEventExecutorGroup;
-
+    private MessageBrokerHandler handler;
 
     public WadeMQBrokerServer(String serverAddress) {
 
@@ -80,11 +81,11 @@ public class WadeMQBrokerServer extends BrokerParallelServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
 
-                            /*ch.pipeline().addLast(
+                            ch.pipeline().addLast(
                                     defaultEventExecutorGroup,
                                     new MessageObjectEncoder(util),
                                     new MessageObjectDecoder(util),
-                                    handler);*/
+                                    handler);
                         }
                     });
 
