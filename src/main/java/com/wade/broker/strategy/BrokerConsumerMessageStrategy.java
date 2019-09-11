@@ -50,7 +50,7 @@ public class BrokerConsumerMessageStrategy implements BrokerStrategy {
         }
     }
 
-    public void setHookProducer(ProducerMessageListener hookProducer) {
+    public void setProducerMessageHandler(ProducerMessageListener producerMessageHandler) {
 
     }
 

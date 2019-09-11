@@ -42,7 +42,7 @@ public class BrokerUnsubscribeStrategy implements BrokerStrategy {
         ConsumerContext.unLoad(msgUnSubscribe.getConsumerId());
     }
 
-    public void setHookProducer(ProducerMessageListener hookProducer) {
+    public void setProducerMessageHandler(ProducerMessageListener producerMessageHandler) {
 
     }
 

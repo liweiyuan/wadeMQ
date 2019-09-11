@@ -87,7 +87,7 @@ public class BrokerStrategyContext {
 
         strategy.setChannelHandler(channelHandler);
         strategy.setHookConsumer(hookConsumer);
-        strategy.setHookProducer(hookProducer);
+        strategy.setProducerMessageHandler(hookProducer);
         strategy.messageDispatch(request, response);
     }
 }

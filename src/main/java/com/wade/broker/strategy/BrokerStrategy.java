@@ -33,7 +33,7 @@ public interface BrokerStrategy {
 
     void messageDispatch(RequestMessage request, ResponseMessage response);
 
-    void setHookProducer(ProducerMessageListener hookProducer);
+    void setProducerMessageHandler(ProducerMessageListener producerMessageHandler);
 
     void setHookConsumer(ConsumerMessageListener hookConsumer);
 

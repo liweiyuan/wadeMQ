@@ -17,8 +17,23 @@ public class MessageSystemConfig {
     static int SocketRcvbufSize
             = Integer.parseInt(System.getProperty(SystemPropertySocketRcvbufSize, "65535"));
 
+    public static final String SystemPropertyAckTaskSemaphoreValue
+            = "com.newlandframework.avatarmq.semaphore.ackTaskSemaphoreValue";
+    public static String AckTaskSemaphoreValue
+            = System.getProperty(SystemPropertyAckTaskSemaphoreValue, "Ack");
 
+    public static final String SystemPropertySemaphoreCacheHookTimeValue
+            = "com.newlandframework.avatarmq.semaphore.hooktime";
+    public static int SemaphoreCacheHookTimeValue
+            = Integer.parseInt(System.getProperty(SystemPropertySemaphoreCacheHookTimeValue, "5"));
+
+
+    public static final String SystemPropertyNotifyTaskSemaphoreValue
+            = "com.newlandframework.avatarmq.semaphore.NotifyTaskSemaphoreValue";
+    public static String NotifyTaskSemaphoreValue
+            = System.getProperty(SystemPropertyNotifyTaskSemaphoreValue, "Notify");
 
     public final static String IpV4AddressDelimiter = ":";
+    public final static String MessageDelimiter = "@";
 
 }

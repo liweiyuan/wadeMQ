@@ -57,7 +57,7 @@ public class BrokerSubscribeStrategy implements BrokerStrategy {
         this.channelHandler = channelHandler;
     }
 
-    public void setHookProducer(ProducerMessageListener hookProducer) {
+    public void setProducerMessageHandler(ProducerMessageListener producerMessageHandler) {
 
     }
 }

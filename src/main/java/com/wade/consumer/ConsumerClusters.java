@@ -77,4 +77,8 @@ public class ConsumerClusters {
             channelList.remove(o);
         }
     }
+
+    public SubscriptionData findSubscriptionData(String topic) {
+        return this.subMap.get(topic);
+    }
 }
