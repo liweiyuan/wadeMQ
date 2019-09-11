@@ -2,7 +2,9 @@ package com.wade.broker.server;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.wade.broker.MessageBrokerHandler;
+import com.wade.consumer.ConsumerMessageHook;
 import com.wade.netty.*;
+import com.wade.broker.ProducerMessageHook;
 import com.wade.serialize.KryoCodecUtil;
 import com.wade.serialize.KryoPoolFactory;
 import io.netty.bootstrap.ServerBootstrap;
@@ -63,6 +65,10 @@ public class WadeMQBrokerServer extends BrokerParallelServer {
     @Override
     public void init() {
         try {
+
+            handler = new MessageBrokerHandler()
+                    .buildConsumerHook(new ConsumerMessageHook())
+                    .buildProducerHook(new ProducerMessageHook());
             boss = new NioEventLoopGroup(1, boosFactory);
             workers = new NioEventLoopGroup(parallel, workFactory, NettyUtil.getNioSelectorProvider());
 

@@ -15,6 +15,8 @@
  */
 package com.wade.consumer;
 
+import com.wade.model.RemoteChannelData;
+import com.wade.model.SubscriptionData;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.iterators.FilterIterator;
 
@@ -42,11 +44,9 @@ public class ConsumerContext {
 
     public static int getClustersStat(final String clusters) {
 
-        Predicate predicate = new Predicate() {
-            public boolean evaluate(Object object) {
-                String clustersId = ((ClustersState) object).getClusters();
-                return clustersId.compareTo(clusters) == 0;
-            }
+        Predicate predicate = object -> {
+            String clustersId = ((ClustersState) object).getClusters();
+            return clustersId.compareTo(clusters) == 0;
         };
 
         Iterator iterator = new FilterIterator(stateArray.iterator(), predicate);
@@ -61,11 +61,9 @@ public class ConsumerContext {
     }
 
     public static ConsumerClusters selectByClusters(final String clusters) {
-        Predicate predicate = new Predicate() {
-            public boolean evaluate(Object object) {
-                String id = ((ClustersRelation) object).getId();
-                return id.compareTo(clusters) == 0;
-            }
+        Predicate predicate = object -> {
+            String id = ((ClustersRelation) object).getId();
+            return id.compareTo(clusters) == 0;
         };
 
         Iterator iterator = new FilterIterator(relationArray.iterator(), predicate);
@@ -93,12 +91,12 @@ public class ConsumerContext {
         return clusters;
     }
 
-    public static void addClusters(String clusters, RemoteChannelData channelinfo) {
-        ConsumerClusters manage = selectByClusters(clusters);
+    public static void addClusters(String clusterId, RemoteChannelData channelinfo) {
+        ConsumerClusters manage = selectByClusters(clusterId);
         if (manage == null) {
-            ConsumerClusters newClusters = new ConsumerClusters(clusters);
+            ConsumerClusters newClusters = new ConsumerClusters(clusterId);
             newClusters.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
-            relationArray.add(new ClustersRelation(clusters, newClusters));
+            relationArray.add(new ClustersRelation(clusterId, newClusters));
         } else if (manage.findRemoteChannelData(channelinfo.getClientId()) != null) {
             manage.detachRemoteChannelData(channelinfo.getClientId());
             manage.attachRemoteChannelData(channelinfo.getClientId(), channelinfo);
