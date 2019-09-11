@@ -75,13 +75,13 @@ public class MessageEventWrapper<T> extends ChannelInboundHandlerAdapter impleme
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         super.channelRead(ctx, msg);
         //消息处理
-        ProxyFactory weaver=new ProxyFactory(wrapper);
-        PointcutAdvisor advisor=new NameMatchMethodPointcutAdvisor();
+        ProxyFactory weaver = new ProxyFactory(wrapper);
+        PointcutAdvisor advisor = new NameMatchMethodPointcutAdvisor();
         ((NameMatchMethodPointcutAdvisor) advisor).setMappedName(proxyMappedName);
-        ((NameMatchMethodPointcutAdvisor) advisor).setAdvice(new MessageEventAdvisor(wrapper,msg));
+        ((NameMatchMethodPointcutAdvisor) advisor).setAdvice(new MessageEventAdvisor(wrapper, msg));
         weaver.addAdvisor(advisor);
 
-        MessageEventHandler proxyHandler= (MessageEventHandler) weaver.getProxy();
+        MessageEventHandler proxyHandler = (MessageEventHandler) weaver.getProxy();
         proxyHandler.handleMessage(ctx, msg);
     }
 
